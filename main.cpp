@@ -31,8 +31,18 @@ long long int fib(long long int n) {
 }
 
 
+int fact(int n) {
+	if (n > 0) {
+		return n * fact(n - 1);
+	}
+	else {
+		return 1;
+	}
+}
+
 int main() {
 	srand((unsigned int)time(NULL));
+	std::cout << "Homework 91" << std::endl << std::endl;
 	for (int i = 0; i < threads_count; i++) {
 		long long int res;
 		long long int n = rand() % rand_num_limit;
@@ -45,6 +55,25 @@ int main() {
 	for (int i = 0; i < threads_count; i++) {
 		threads[i].join();
 	}
+
+
+	std::cout << std::endl << "Homework 90" << std::endl;
+
+	long long int x = 20;
+	long long int fibo;
+	long long int facto;
+
+	std::thread fibon([&fibo, x]() {
+		fibo = fib(x);
+	});
+	std::thread factor([&facto, x]() {
+		facto = fact(x);
+	});
+	fibon.join();
+	factor.join();
+
+	std::cout << x << "! = " << facto << std::endl;
+	std::cout << x << "-th fibonacci number is " << fibo << std::endl;
 
 	return 0;
 }
